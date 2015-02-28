@@ -743,7 +743,7 @@
 1425063760 /home/arubi/Documents/TabajosProgra3Lab/BeatEmUp-master/EnemigoVerde.h
 	"Enemigo.h"
 
-1425092322 source:/home/arubi/Documents/TabajosProgra3Lab/BeatEmUp-master/main.cpp
+1425098327 source:/home/arubi/Documents/TabajosProgra3Lab/BeatEmUp-master/main.cpp
 	<SDL2/SDL.h>
 	<SDL2/SDL_image.h>
 	<iostream>

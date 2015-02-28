@@ -14,10 +14,10 @@ using namespace std;
 SDL_Window* window;
 SDL_Renderer* renderer;
 SDL_Event Event;
-SDL_Texture *background;
-SDL_Rect rect_background;
+SDL_Texture *background,*stop;
+SDL_Rect rect_background, rect_stop;
 
-
+bool pause=false;
 void loopJuego()
 {
     //Init textures
@@ -29,6 +29,11 @@ void loopJuego()
     rect_background.w = w;
     rect_background.h = h;
 
+    stop = IMG_LoadTexture(renderer,"pause.png");
+    rect_stop.x = 0;
+    rect_stop.y = 0;
+    rect_stop.w = 1024;
+    rect_stop.h = 768;
 
     list<Personaje*> personajes;
     personajes.push_back(new Sho(renderer,&personajes));
@@ -50,10 +55,21 @@ void loopJuego()
         }
         if(currentKeyStates[SDL_SCANCODE_P])
         {
+            pause=true;
+                stop = IMG_LoadTexture(renderer,"pause.png");
+
+            SDL_RenderCopy(renderer, stop, NULL, &rect_stop);
 
         }
+        if(currentKeyStates[SDL_SCANCODE_O])
+        {
+            stop=NULL;
+            pause=false;
+        }
 
-        if(frame%1000==0)
+        if(pause==false)
+        {
+            if(frame%1000==0)
         {
             personajes.push_back(new EnemigoAzul(renderer,&personajes));
         }
@@ -63,7 +79,6 @@ void loopJuego()
                 p++)
             (*p)->act();
 
-        SDL_SetRenderDrawColor(renderer, 255, 100, 0, 255);
 
         // Clear the entire screen to our selected color.
         SDL_RenderClear(renderer);
@@ -83,6 +98,9 @@ void loopJuego()
                 personajes.erase(p);
                 break;
             }
+        }
+
+        SDL_SetRenderDrawColor(renderer, 255, 100, 0, 255);
 
         SDL_RenderPresent(renderer);
 
